@@ -12,11 +12,13 @@ package org.eclipse.che.ide.command.toolbar.previewurl;
 
 import elemental.dom.Element;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.safehtml.shared.SafeHtmlBuilder;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
 import org.eclipse.che.ide.FontAwesome;
+import org.eclipse.che.ide.command.CommandResources;
 import org.eclipse.che.ide.ui.Tooltip;
 import org.eclipse.che.ide.ui.dropdown.BaseListItem;
 import org.eclipse.che.ide.ui.dropdown.StringItemRenderer;
@@ -24,7 +26,7 @@ import org.eclipse.che.ide.ui.dropdown.StringItemRenderer;
 import static org.eclipse.che.ide.ui.menu.PositionController.HorizontalAlign.MIDDLE;
 import static org.eclipse.che.ide.ui.menu.PositionController.VerticalAlign.BOTTOM;
 
-/** {@link StringItemRenderer} which always returns the same header widget. */
+/** Renders widgets for the 'Previews' list. Always returns the same instance of header widget. */
 class PreviewUrlItemRenderer extends StringItemRenderer {
 
     static final HeaderWidget HEADER_WIDGET = new HeaderWidget();
@@ -39,13 +41,17 @@ class PreviewUrlItemRenderer extends StringItemRenderer {
     }
 
     private static class HeaderWidget extends Label {
+
+        private static final CommandResources RESOURCES = GWT.create(CommandResources.class);
+
         HeaderWidget() {
             super();
+
+            addStyleName(RESOURCES.commandToolbarCss().previewUrlWidget());
 
             final SafeHtmlBuilder safeHtmlBuilder = new SafeHtmlBuilder();
             safeHtmlBuilder.appendHtmlConstant(FontAwesome.BULLSEYE);
             getElement().setInnerSafeHtml(safeHtmlBuilder.toSafeHtml());
-            getElement().getStyle().setColor("#4eabff");
 
             Tooltip.create((Element)getElement(), BOTTOM, MIDDLE, "Previews");
         }

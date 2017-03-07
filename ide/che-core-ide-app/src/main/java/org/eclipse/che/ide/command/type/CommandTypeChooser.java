@@ -15,6 +15,7 @@ import com.google.inject.Inject;
 import org.eclipse.che.api.promises.client.Promise;
 import org.eclipse.che.api.promises.client.PromiseProvider;
 import org.eclipse.che.api.promises.client.js.Executor;
+import org.eclipse.che.api.promises.client.js.Executor.ExecutorBody;
 import org.eclipse.che.api.promises.client.js.JsPromiseError;
 import org.eclipse.che.api.promises.client.js.RejectFunction;
 import org.eclipse.che.api.promises.client.js.ResolveFunction;
@@ -27,7 +28,6 @@ import java.util.List;
  * Provides a simple mechanism for the user to choose a {@link CommandType}.
  *
  * @author Artem Zatsarynnyi
- * @see #show(int, int)
  */
 public class CommandTypeChooser implements CommandTypeChooserView.ActionDelegate {
 
@@ -69,11 +69,11 @@ public class CommandTypeChooser implements CommandTypeChooserView.ActionDelegate
             return promiseProvider.resolve(commandTypes.get(0));
         }
 
-        view.setTypes(commandTypes);
+        view.setCommandTypes(commandTypes);
 
         view.show(left, top);
 
-        return promiseProvider.create(Executor.create((Executor.ExecutorBody<CommandType>)(resolve, reject) -> {
+        return promiseProvider.create(Executor.create((ExecutorBody<CommandType>)(resolve, reject) -> {
             resolveFunction = resolve;
             rejectFunction = reject;
         }));

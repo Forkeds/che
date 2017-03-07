@@ -27,6 +27,7 @@ import org.eclipse.che.ide.api.command.CommandGoal;
 import org.eclipse.che.ide.api.command.CommandManager;
 import org.eclipse.che.ide.api.command.CommandManager.CommandChangedListener;
 import org.eclipse.che.ide.api.command.CommandManager.CommandLoadedListener;
+import org.eclipse.che.ide.api.command.CommandType;
 import org.eclipse.che.ide.api.command.ContextualCommand;
 import org.eclipse.che.ide.api.command.ContextualCommand.ApplicableContext;
 import org.eclipse.che.ide.api.command.PredefinedCommandGoalRegistry;
@@ -122,7 +123,7 @@ public class CommandsExplorerPresenter extends BasePresenter implements Commands
 
     @Override
     public String getTitle() {
-        return messages.explorerPartTitle();
+        return messages.partTitle();
     }
 
     @Override
@@ -133,7 +134,7 @@ public class CommandsExplorerPresenter extends BasePresenter implements Commands
     @Nullable
     @Override
     public String getTitleToolTip() {
-        return messages.explorerPartTooltip();
+        return messages.partTooltip();
     }
 
     @Nullable
@@ -148,52 +149,49 @@ public class CommandsExplorerPresenter extends BasePresenter implements Commands
         final ApplicableContext defaultApplicableContext = new ApplicableContext();
         defaultApplicableContext.setWorkspaceApplicable(true);
 
-        commandTypeChooser.show(left, top).then(selectedCommandType -> {
+        commandTypeChooser.show(left, top).then(createCommand(defaultApplicableContext));
+    }
+
+    /** Returns an operation which creates a command with the given context. */
+    private Operation<CommandType> createCommand(ApplicableContext context) {
+        return selectedCommandType -> {
             final CommandGoal selectedGoal = view.getSelectedGoal();
 
-            if (selectedGoal != null) {
-                commandManager.createCommand(selectedGoal.getId(),
-                                             selectedCommandType.getId(),
-                                             defaultApplicableContext)
-                              .then(command -> {
-                                  refreshViewAndSelectCommand(command);
-                                  editorAgent.openEditor(nodeFactory.newCommandFileNode(command));
-                              })
-                              .catchError((Operation<PromiseError>)arg -> {
-                                  notificationManager.notify(messages.explorerMessageUnableCreate(),
-                                                             arg.getMessage(),
-                                                             FAIL,
-                                                             EMERGE_MODE);
-                                  throw new OperationException(arg.getMessage());
-                              });
+            if (selectedGoal == null) {
+                return;
             }
-        });
+
+            commandManager.createCommand(selectedGoal.getId(), selectedCommandType.getId(), context)
+                          .then(command -> {
+                              refreshViewAndSelectCommand(command);
+                              editorAgent.openEditor(nodeFactory.newCommandFileNode(command));
+                          })
+                          .catchError(showErrorNotification(messages.unableCreate()));
+        };
     }
 
     @Override
     public void onCommandDuplicate(ContextualCommand command) {
         commandManager.createCommand(command)
                       .then(this::refreshViewAndSelectCommand)
-                      .catchError((Operation<PromiseError>)arg -> {
-                          notificationManager.notify(messages.explorerMessageUnableDuplicate(),
-                                                     arg.getMessage(),
-                                                     FAIL,
-                                                     EMERGE_MODE);
-                          throw new OperationException(arg.getMessage());
-                      });
+                      .catchError(showErrorNotification(messages.unableDuplicate()));
     }
 
     @Override
-    public void onCommandRemove(final ContextualCommand command) {
-        dialogFactory.createConfirmDialog(messages.explorerRemoveCommandConfirmationTitle(),
-                                          messages.explorerRemoveCommandConfirmationMessage(command.getName()),
+    public void onCommandRemove(ContextualCommand command) {
+        dialogFactory.createConfirmDialog(messages.removeCommandConfirmationTitle(),
+                                          messages.removeCommandConfirmationMessage(command.getName()),
                                           () -> commandManager.removeCommand(command.getName())
-                                                              .catchError(arg -> {
-                                                                  notificationManager.notify(messages.explorerMessageUnableRemove(),
-                                                                                             arg.getMessage(),
-                                                                                             FAIL,
-                                                                                             EMERGE_MODE);
-                                                              }), null).show();
+                                                              .catchError(showErrorNotification(messages.unableRemove())),
+                                          null).show();
+    }
+
+    /** Returns an operation which shows an error notification with the given title. */
+    private Operation<PromiseError> showErrorNotification(String title) {
+        return err -> {
+            notificationManager.notify(title, err.getMessage(), FAIL, EMERGE_MODE);
+            throw new OperationException(err.getMessage());
+        };
     }
 
     @Override

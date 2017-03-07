@@ -15,6 +15,7 @@ package org.eclipse.che.ide.ui.dropdown;
  *
  * @param <T>
  *         type of the value that this item represents
+ * @see StringItemRenderer
  */
 public class BaseListItem<T> implements DropdownListItem {
 

@@ -87,7 +87,10 @@ class ProcessWidget extends FlowPanel {
         machineNameLabel.addStyleName(RESOURCES.commandToolbarCss().processWidgetText());
         machineNameLabel.addStyleName(RESOURCES.commandToolbarCss().processWidgetMachineNameLabel());
 
-        Tooltip.create((Element)machineNameLabel.getElement(), BOTTOM, MIDDLE, process.getCommandLine());
+        Tooltip.create((Element)machineNameLabel.getElement(),
+                       BOTTOM,
+                       MIDDLE,
+                       process.getCommandLine().split("\\n"));
 
         return machineNameLabel;
     }
@@ -97,7 +100,10 @@ class ProcessWidget extends FlowPanel {
         commandNameLabel.addStyleName(RESOURCES.commandToolbarCss().processWidgetText());
         commandNameLabel.addStyleName(RESOURCES.commandToolbarCss().processWidgetCommandNameLabel());
 
-        Tooltip.create((Element)commandNameLabel.getElement(), BOTTOM, MIDDLE, process.getCommandLine());
+        Tooltip.create((Element)commandNameLabel.getElement(),
+                       BOTTOM,
+                       MIDDLE,
+                       process.getCommandLine().split("\\n"));
 
         return commandNameLabel;
     }

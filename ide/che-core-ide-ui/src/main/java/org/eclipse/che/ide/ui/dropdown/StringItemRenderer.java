@@ -15,7 +15,11 @@ import com.google.gwt.user.client.ui.Widget;
 
 import static com.google.gwt.dom.client.Style.Unit.PX;
 
-/** Renderer that uses {@link Label} widget for rendering text value in the {@link DropdownList}. */
+/**
+ * Renders the given {@link BaseListItem} as {@link Label}.
+ *
+ * @see BaseListItem
+ */
 public class StringItemRenderer implements DropdownListItemRenderer {
 
     private final BaseListItem<String> item;

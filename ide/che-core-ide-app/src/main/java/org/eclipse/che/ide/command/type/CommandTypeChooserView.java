@@ -36,7 +36,7 @@ public interface CommandTypeChooserView extends View<CommandTypeChooserView.Acti
     void close();
 
     /** Sets the command types to display in the view. */
-    void setTypes(List<CommandType> commandTypes);
+    void setCommandTypes(List<CommandType> commandTypes);
 
     /** The action delegate for this view. */
     interface ActionDelegate {

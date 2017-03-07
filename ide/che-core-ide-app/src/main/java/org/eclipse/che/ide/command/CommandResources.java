@@ -52,8 +52,10 @@ public interface CommandResources extends ClientBundle {
     @Source({"editor/styles.css", "org/eclipse/che/ide/api/ui/style.css"})
     EditorCSS editorCss();
 
-    interface ExplorerCSS extends CssResource {
+    @Source({"type/styles.css", "org/eclipse/che/ide/api/ui/style.css"})
+    CommandTypeChooserCSS commandTypeChooserCss();
 
+    interface ExplorerCSS extends CssResource {
         String commandGoalNode();
 
         String commandNode();
@@ -68,7 +70,6 @@ public interface CommandResources extends ClientBundle {
     }
 
     interface ToolbarCSS extends CssResource {
-
         String toolbarButton();
 
         String processesListLabel();
@@ -82,12 +83,17 @@ public interface CommandResources extends ClientBundle {
         String processWidgetPidLabel();
 
         String processWidgetActionButton();
+
+        String previewUrlWidget();
     }
 
     interface EditorCSS extends CssResource {
-
         String sectionLabel();
 
         String section();
+    }
+
+    interface CommandTypeChooserCSS extends CssResource {
+        String chooserPopup();
     }
 }

@@ -87,7 +87,6 @@ public class DropdownList extends Composite {
         initWidget(UI_BINDER.createAndBindUi(this));
 
         dropButtonPanel.getElement().appendChild(RESOURCES.expansionImage().getSvg().getElement());
-        dropButtonPanel.addStyleName(RESOURCES.dropdownListCss().dropButton());
 
         dropdownContentPanel = new FlowPanel();
 

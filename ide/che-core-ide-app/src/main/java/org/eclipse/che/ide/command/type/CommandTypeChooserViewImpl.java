@@ -14,12 +14,12 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
-import com.google.gwt.user.client.ui.DockLayoutPanel;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.inject.Inject;
 
 import org.eclipse.che.ide.api.command.CommandType;
+import org.eclipse.che.ide.command.CommandResources;
 
 import java.util.HashMap;
 import java.util.List;
@@ -41,16 +41,15 @@ public class CommandTypeChooserViewImpl extends PopupPanel implements CommandTyp
     private final Map<String, CommandType> commandTypesById;
 
     @UiField
-    DockLayoutPanel layoutPanel;
-
-    @UiField
     ListBox typesList;
 
     private ActionDelegate delegate;
 
     @Inject
-    public CommandTypeChooserViewImpl() {
+    public CommandTypeChooserViewImpl(CommandResources resources) {
         commandTypesById = new HashMap<>();
+
+        addStyleName(resources.commandTypeChooserCss().chooserPopup());
 
         setWidget(UI_BINDER.createAndBindUi(this));
 
@@ -126,27 +125,19 @@ public class CommandTypeChooserViewImpl extends PopupPanel implements CommandTyp
     }
 
     @Override
-    public void setTypes(List<CommandType> commandTypes) {
+    public void setCommandTypes(List<CommandType> commandTypes) {
         typesList.clear();
         commandTypesById.clear();
 
-        for (CommandType commandType : commandTypes) {
+        commandTypes.forEach(commandType -> {
             commandTypesById.put(commandType.getId(), commandType);
-
             typesList.addItem(commandType.getDisplayName(), commandType.getId());
-        }
+        });
 
         typesList.setVisibleItemCount(commandTypes.size());
         typesList.setSelectedIndex(0);
-
-        // set height of the each row in the list to 16 px
-        final int listHeight = 16 * commandTypes.size();
-        typesList.setHeight(listHeight + "px");
-
-        // set height of the entire panel
-        layoutPanel.setHeight(listHeight + "px");
     }
 
-    interface CommandTypeChooserViewImplUiBinder extends UiBinder<DockLayoutPanel, CommandTypeChooserViewImpl> {
+    interface CommandTypeChooserViewImplUiBinder extends UiBinder<ListBox, CommandTypeChooserViewImpl> {
     }
 }

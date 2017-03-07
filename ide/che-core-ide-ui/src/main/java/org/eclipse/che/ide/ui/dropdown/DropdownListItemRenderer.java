@@ -13,8 +13,9 @@ package org.eclipse.che.ide.ui.dropdown;
 import com.google.gwt.user.client.ui.Widget;
 
 /**
- * Renderer of the items for {@link DropdownList}.
- * <p><b>Important:</b> {@link #renderHeaderWidget()} and {@link #renderListWidget()} mustn't return the same instance.
+ * Interface for specifying an arbitrary renderer for {@link DropdownList}'s items.
+ * <p><strong>Important:</strong> {@link #renderHeaderWidget()} and
+ * {@link #renderListWidget()} <strong>mustn't</strong> return the same instance.
  *
  * @see StringItemRenderer
  */

@@ -17,6 +17,7 @@ import org.eclipse.che.api.core.model.workspace.WorkspaceRuntime;
 import org.eclipse.che.api.promises.client.Promise;
 import org.eclipse.che.api.promises.client.PromiseProvider;
 import org.eclipse.che.api.promises.client.js.Executor;
+import org.eclipse.che.api.promises.client.js.Executor.ExecutorBody;
 import org.eclipse.che.api.promises.client.js.JsPromiseError;
 import org.eclipse.che.api.promises.client.js.RejectFunction;
 import org.eclipse.che.api.promises.client.js.ResolveFunction;
@@ -28,7 +29,6 @@ import java.util.List;
  * Provides a simple mechanism for the user to choose a {@link Machine}.
  *
  * @author Artem Zatsarynnyi
- * @see #show()
  */
 public class MachineChooser implements MachineChooserView.ActionDelegate {
 
@@ -73,7 +73,7 @@ public class MachineChooser implements MachineChooserView.ActionDelegate {
 
         view.show();
 
-        return promiseProvider.create(Executor.create((Executor.ExecutorBody<Machine>)(resolve, reject) -> {
+        return promiseProvider.create(Executor.create((ExecutorBody<Machine>)(resolve, reject) -> {
             resolveFunction = resolve;
             rejectFunction = reject;
         }));

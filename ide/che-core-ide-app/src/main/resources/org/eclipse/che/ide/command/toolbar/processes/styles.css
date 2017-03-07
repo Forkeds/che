@@ -61,3 +61,12 @@
 .processWidgetActionButton {
     color: #4eabff;
 }
+
+.previewUrlWidget {
+    color: #4eabff;
+    font-size: 18px;
+}
+
+.previewUrlWidget:active {
+    color: #235c9e;
+}

@@ -19,6 +19,7 @@ import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
 import org.eclipse.che.commons.annotation.Nullable;
+import org.eclipse.che.ide.Resources;
 import org.eclipse.che.ide.api.command.CommandGoal;
 import org.eclipse.che.ide.api.command.ContextualCommand;
 import org.eclipse.che.ide.api.data.tree.Node;
@@ -58,7 +59,7 @@ public class CommandsExplorerViewImpl extends BaseView<CommandsExplorerView.Acti
     Tree tree;
 
     @Inject
-    public CommandsExplorerViewImpl(org.eclipse.che.ide.Resources coreResources,
+    public CommandsExplorerViewImpl(Resources coreResources,
                                     ExplorerMessages messages,
                                     CommandResources resources,
                                     NodeFactory nodeFactory) {
@@ -67,7 +68,7 @@ public class CommandsExplorerViewImpl extends BaseView<CommandsExplorerView.Acti
         this.nodeFactory = nodeFactory;
         commandNodes = new HashMap<>();
 
-        setTitle(messages.explorerViewTitle());
+        setTitle(messages.viewTitle());
 
         tree = new Tree(new NodeStorage(), new NodeLoader());
 
@@ -85,7 +86,9 @@ public class CommandsExplorerViewImpl extends BaseView<CommandsExplorerView.Acti
                 }
             }
 
-            tree.getNodeDescriptor(event.getSelectedItem()).getNodeContainerElement().setAttribute("selected", "selected");
+            tree.getNodeDescriptor(event.getSelectedItem())
+                .getNodeContainerElement()
+                .setAttribute("selected", "selected");
         });
 
         setContentWidget(UI_BINDER.createAndBindUi(this));

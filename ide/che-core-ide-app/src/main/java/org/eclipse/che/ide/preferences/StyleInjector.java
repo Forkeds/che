@@ -43,5 +43,6 @@ public class StyleInjector {
         resources.commandsPaletteCss().ensureInjected();
         resources.commandToolbarCss().ensureInjected();
         resources.editorCss().ensureInjected();
+        resources.commandTypeChooserCss().ensureInjected();
     }
 }

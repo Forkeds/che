@@ -125,11 +125,11 @@ public class ExecuteCommandViewImpl implements ExecuteCommandView {
         final List<PopupItem> items = itemsProvider.getItems();
 
         if (defaultItem != null) {
-            button.setTitle("Execute " + defaultItem.getName());
+            button.setTooltip("Execute " + defaultItem.getName());
         } else if (items.isEmpty()) {
-            button.setTitle("No command defined for " + button.getGoal().getId() + ". Configure it in Commands panel.");
+            button.setTooltip("No command defined for " + button.getGoal().getId() + ". Configure it in Commands panel.");
         } else {
-            button.setTitle("Choose command of " + button.getGoal().getId() + " goal to execute");
+            button.setTooltip("Choose command of " + button.getGoal().getId() + " goal to execute");
         }
     }
 

@@ -14,7 +14,7 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
-import com.google.gwt.user.client.ui.DockLayoutPanel;
+import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.inject.Inject;
@@ -37,9 +37,6 @@ public class MachineChooserViewImpl extends PopupPanel implements MachineChooser
 
     /** Map that contains all shown machines. */
     private final Map<String, Machine> machinesById;
-
-    @UiField
-    DockLayoutPanel layoutPanel;
 
     @UiField
     ListBox machinesList;
@@ -114,7 +111,6 @@ public class MachineChooserViewImpl extends PopupPanel implements MachineChooser
         super.show();
 
         center();
-
         machinesList.setFocus(true);
     }
 
@@ -128,23 +124,15 @@ public class MachineChooserViewImpl extends PopupPanel implements MachineChooser
         machinesList.clear();
         machinesById.clear();
 
-        for (Machine machine : machines) {
+        machines.forEach(machine -> {
             machinesById.put(machine.getId(), machine);
-
             machinesList.addItem(machine.getConfig().getName(), machine.getId());
-        }
+        });
 
         machinesList.setVisibleItemCount(machines.size());
         machinesList.setSelectedIndex(0);
-
-        // set height of the each row in the list to 16 px
-        final int listHeight = 16 * machines.size();
-        machinesList.setHeight(listHeight + "px");
-
-        // set height of the entire panel
-        layoutPanel.setHeight(20 + listHeight + "px");
     }
 
-    interface MachineChooserViewImplUiBinder extends UiBinder<DockLayoutPanel, MachineChooserViewImpl> {
+    interface MachineChooserViewImplUiBinder extends UiBinder<FlowPanel, MachineChooserViewImpl> {
     }
 }

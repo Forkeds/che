@@ -26,8 +26,6 @@ public interface DropdownListResources extends ClientBundle {
 
     interface DropdownCss extends CssResource {
 
-        String dropButton();
-
         String itemsPanel();
 
         String listItem();

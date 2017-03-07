@@ -8,21 +8,6 @@
  * Contributors:
  *   Codenvy, S.A. - initial API and implementation
  *******************************************************************************/
-.itemsPanel {
-    background-color: openedFilesDropdownListBackgroundColor;
-    border: 1px solid openedFilesDropdownListBorderColor;
-    box-shadow: 0 2px 2px 0 openedFilesDropdownListShadowColor;
-    border-radius: 0 0 3px 3px;
-}
-
-.listItem {
-    width: literal("calc(100% - 27px)");
-    height: 22px;
-    padding: 0 22px 0 5px;
-    cursor: pointer;
-    line-height: 22px;
-}
-
-.listItem:hover {
-    background-color: hoverBackgroundColor;
+.chooserPopup {
+    background-color: textFieldBackgroundColor;
 }

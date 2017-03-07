@@ -128,7 +128,7 @@ public class CommandsExplorerPresenterTest {
     public void shouldReturnTitle() throws Exception {
         presenter.getTitle();
 
-        verify(messages).explorerPartTitle();
+        verify(messages).partTitle();
     }
 
     @Test
@@ -142,7 +142,7 @@ public class CommandsExplorerPresenterTest {
     public void shouldReturnTitleTooltip() throws Exception {
         presenter.getTitleToolTip();
 
-        verify(messages).explorerPartTooltip();
+        verify(messages).partTooltip();
     }
 
     @Test
@@ -225,7 +225,7 @@ public class CommandsExplorerPresenterTest {
 
         verify(commandPromise).catchError(errorOperationCaptor.capture());
         errorOperationCaptor.getValue().apply(mock(PromiseError.class));
-        verify(messages).explorerMessageUnableCreate();
+        verify(messages).unableCreate();
         verify(notificationManager).notify(anyString(), anyString(), eq(FAIL), eq(EMERGE_MODE));
     }
 
@@ -250,7 +250,7 @@ public class CommandsExplorerPresenterTest {
 
         verify(commandPromise).catchError(errorOperationCaptor.capture());
         errorOperationCaptor.getValue().apply(mock(PromiseError.class));
-        verify(messages).explorerMessageUnableDuplicate();
+        verify(messages).unableDuplicate();
         verify(notificationManager).notify(anyString(), anyString(), eq(FAIL), eq(EMERGE_MODE));
     }
 
@@ -295,7 +295,7 @@ public class CommandsExplorerPresenterTest {
         verify(commandManager, never()).removeCommand(anyString());
     }
 
-    @Test
+    @Test(expected = OperationException.class)
     public void shouldShowNotificationWhenFailedToRemoveCommand() throws Exception {
         // given
         ConfirmDialog confirmDialog = mock(ConfirmDialog.class);
@@ -316,7 +316,7 @@ public class CommandsExplorerPresenterTest {
 
         verify(voidPromise).catchError(errorOperationCaptor.capture());
         errorOperationCaptor.getValue().apply(mock(PromiseError.class));
-        verify(messages).explorerMessageUnableRemove();
+        verify(messages).unableRemove();
         verify(notificationManager).notify(anyString(), anyString(), eq(FAIL), eq(EMERGE_MODE));
     }
 
