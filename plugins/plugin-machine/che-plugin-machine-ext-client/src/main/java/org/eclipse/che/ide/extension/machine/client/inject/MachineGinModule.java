@@ -21,7 +21,6 @@ import org.eclipse.che.ide.api.command.CommandExecutor;
 import org.eclipse.che.ide.api.command.CommandType;
 import org.eclipse.che.ide.api.extension.ExtensionGinModule;
 import org.eclipse.che.ide.api.machine.MachineEntity;
-import org.eclipse.che.ide.api.machine.MachineManager;
 import org.eclipse.che.ide.api.macro.Macro;
 import org.eclipse.che.ide.api.outputconsole.OutputConsole;
 import org.eclipse.che.ide.extension.machine.client.RecipeScriptDownloadServiceClient;
@@ -35,9 +34,6 @@ import org.eclipse.che.ide.extension.machine.client.inject.factories.EntityFacto
 import org.eclipse.che.ide.extension.machine.client.inject.factories.TerminalFactory;
 import org.eclipse.che.ide.extension.machine.client.inject.factories.WidgetsFactory;
 import org.eclipse.che.ide.extension.machine.client.machine.MachineItem;
-import org.eclipse.che.ide.extension.machine.client.machine.MachineManagerImpl;
-import org.eclipse.che.ide.extension.machine.client.machine.create.CreateMachineView;
-import org.eclipse.che.ide.extension.machine.client.machine.create.CreateMachineViewImpl;
 import org.eclipse.che.ide.extension.machine.client.outputspanel.console.CommandConsoleFactory;
 import org.eclipse.che.ide.extension.machine.client.outputspanel.console.CommandOutputConsole;
 import org.eclipse.che.ide.extension.machine.client.outputspanel.console.CommandOutputConsolePresenter;
@@ -80,7 +76,6 @@ public class MachineGinModule extends AbstractGinModule {
 
     @Override
     protected void configure() {
-        bind(CreateMachineView.class).to(CreateMachineViewImpl.class);
         bind(OutputConsoleView.class).to(OutputConsoleViewImpl.class);
         install(new GinFactoryModuleBuilder()
                         .implement(CommandOutputConsole.class, Names.named("command"), CommandOutputConsolePresenter.class)
@@ -107,8 +102,6 @@ public class MachineGinModule extends AbstractGinModule {
                                              .implement(MachineEntity.class, MachineItem.class)
                                              .build(EntityFactory.class));
         install(new GinFactoryModuleBuilder().build(TerminalFactory.class));
-
-        bind(MachineManager.class).to(MachineManagerImpl.class).in(Singleton.class);
 
         bindConstant().annotatedWith(Names.named("machine.extension.api_port")).to(Constants.WS_AGENT_PORT);
 

@@ -25,7 +25,7 @@ import org.eclipse.che.ide.api.app.AppContext;
 import org.eclipse.che.ide.api.command.CommandProducer;
 import org.eclipse.che.ide.api.component.Component;
 import org.eclipse.che.ide.api.constraints.Constraints;
-import org.eclipse.che.ide.api.machine.MachineServiceClient;
+import org.eclipse.che.ide.api.machine.ActiveRuntime;
 import org.eclipse.che.ide.api.machine.events.MachineStateEvent;
 import org.eclipse.che.ide.api.machine.events.WsAgentStateEvent;
 import org.eclipse.che.ide.api.machine.events.WsAgentStateHandler;
@@ -60,7 +60,6 @@ public class CommandProducerActionManager implements MachineStateEvent.Handler,
     private final ActionManager                actionManager;
     private final CommandProducerActionFactory commandProducerActionFactory;
     private final AppContext                   appContext;
-    private final MachineServiceClient         machineServiceClient;
     private final Resources                    resources;
     private final ProducerMessages             messages;
 
@@ -77,13 +76,11 @@ public class CommandProducerActionManager implements MachineStateEvent.Handler,
                                         ActionManager actionManager,
                                         CommandProducerActionFactory commandProducerActionFactory,
                                         AppContext appContext,
-                                        MachineServiceClient machineServiceClient,
                                         Resources resources,
                                         ProducerMessages messages) {
         this.actionManager = actionManager;
         this.commandProducerActionFactory = commandProducerActionFactory;
         this.appContext = appContext;
-        this.machineServiceClient = machineServiceClient;
         this.resources = resources;
         this.messages = messages;
 
@@ -121,11 +118,12 @@ public class CommandProducerActionManager implements MachineStateEvent.Handler,
 
     @Override
     public void start(final Callback<Component, Exception> callback) {
-        machineServiceClient.getMachines(appContext.getWorkspaceId()).then(arg -> {
-            machines.addAll(arg);
+        ActiveRuntime activeRuntime = appContext.getActiveRuntime();
+        if (activeRuntime != null) {
+            machines.addAll(activeRuntime.getMachines());
+        }
 
-            callback.onSuccess(CommandProducerActionManager.this);
-        });
+        callback.onSuccess(this);
     }
 
     @Override

@@ -1054,16 +1054,7 @@
         }
       },
       {
-        "name": "2. Stop",
-        "type": "custom",
-        "commandLine": "print-help \ncd ${current.project.path} \npkill -u bitnami node \necho \"Web server stopped.\"",
-        "attributes": {
-          "previewUrl": "",
-          "goal": "Run"
-        }
-      },
-      {
-        "name": "3. Run",
+        "name": "2. Run",
         "type": "custom",
         "commandLine": "print-help \ncd ${current.project.path} \nnpm start",
         "attributes": {
@@ -1150,25 +1141,16 @@
       {
         "name": "1. Create and run project",
         "type": "custom",
-        "commandLine": "print-help \nsudo HOME=/root /opt/bitnami/nami/bin/nami start mariadb \ncp -a /tmp/laravel-sample/. ${current.project.path} \ncd ${current.project.path} \ncomposer update \nphp artisan migrate \nphp artisan serve --host=0.0.0.0 --port=3000",
+        "commandLine": "print-help \nsudo HOME=/root /opt/bitnami/nami/bin/nami start mariadb \ncp -an /tmp/laravel-sample/. ${current.project.path} \ncd ${current.project.path} \ncomposer update \nphp artisan migrate \nphp artisan serve --host=0.0.0.0 --port=3000",
         "attributes": {
           "previewUrl": "http://${server.port.3000}/",
           "goal": "Run"
         }
       },
       {
-        "name": "2. Stop",
+        "name": "2. Run",
         "type": "custom",
-        "commandLine": "print-help \ncd ${current.project.path} \npkill -u bitnami php \necho \"Web server stopped.\"",
-        "attributes": {
-          "previewUrl": "",
-          "goal": "Run"
-        }
-      },
-      {
-        "name": "3. Run",
-        "type": "custom",
-        "commandLine": "print-help \ncd ${current.project.path} \nphp artisan serve --host=0.0.0.0 --port=3000",
+        "commandLine": "print-help \nsudo HOME=/root /opt/bitnami/nami/bin/nami start mariadb \ncd ${current.project.path} \nphp artisan serve --host=0.0.0.0 --port=3000",
         "attributes": {
           "previewUrl": "http://${server.port.3000}/",
           "goal": "Run"
@@ -1354,16 +1336,7 @@
         }
       },
       {
-        "name": "2. Stop",
-        "type": "custom",
-        "commandLine": "print-help \ncd ${current.project.path} \npkill -u bitnami -n java \necho \"Web server stopped.\"",
-        "attributes": {
-          "previewUrl": "",
-          "goal": "Run"
-        }
-      },
-      {
-        "name": "3. Run",
+        "name": "2. Run",
         "type": "custom",
         "commandLine": "print-help \ncd ${current.project.path} \n/opt/bitnami/activator/bin/activator -Doffline=true -Dhttp.host=0.0.0.0 -Dhttp.port=9000 -Dsbt.log.noformat=true ~run",
         "attributes": {

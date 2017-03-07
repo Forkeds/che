@@ -48,9 +48,12 @@ public final class Constants {
 
     public static final String WS_AGENT_PROCESS_NAME = "CheWsAgent";
 
+    public static final String CHE_WORKSPACE_AUTO_SNAPSHOT           = "che.workspace.auto_snapshot";
+    public static final String CHE_WORKSPACE_AUTO_RESTORE            = "che.workspace.auto_restore";
+    public static final String CHE_WORKSPACE_AUTO_START              = "che.workspace.auto_start";
+
     public static final String COMMAND_PREVIEW_URL_ATTRIBUTE_NAME = "previewUrl";
     public static final String COMMAND_GOAL_ATTRIBUTE_NAME        = "goal";
 
-    private Constants() {
-    }
+    private Constants() {}
 }
